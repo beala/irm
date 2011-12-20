@@ -4,7 +4,7 @@
 # irm [file1 file2 ... filen] to move file1-filen to the trash.
 # Wildcards should work. eg: irm * to trash all the files in the directory, etc.
 
-TRASH=".Trash"  #The trashcan directory within your home directory
+TRASH="$HOME/.Trash"  #The trashcan directory within your home directory
 
 irm()
 {
@@ -18,18 +18,18 @@ irm()
   fi
 
   #Check to make sure the trashcan exists.
-        if [ ! -e ~/$TRASH ];then
-                echo "$HOME/$TRASH does not exist. Would you like to create it? Y/N"
-                read INPUT
+  if [ ! -e "$TRASH" ];then
+    echo "$TRASH does not exist. Would you like to create it? Y/N"
+    read INPUT
 
-                if [[ $INPUT = "Y" || $INPUT = "y" ]]; then
-                        mkdir ~/$TRASH
-                        echo "Trashcan created."
-                else
-                        echo "Ok, no trashcan was created and no files were deleted."
-                        return
-                fi
-        fi
+    if [[ $INPUT = "Y" || $INPUT = "y" ]]; then
+      mkdir "$TRASH"
+      echo "Trashcan created."
+    else
+      echo "Ok, no trashcan was created and no files were deleted."
+      return
+    fi
+  fi
 
   #Check for the -e flag, which empties the trash.
   if [ "$1" = "-e" ]; then
@@ -37,7 +37,7 @@ irm()
     read VERIFY
 
     if [[ $VERIFY = "Y" || $VERIFY = "y" ]]; then
-      rm -rf ~/$TRASH/*
+      rm -rf "$TRASH/*"
       echo "Trash emptied."
     else
       echo "Ok, nothing has been deleted."
@@ -49,17 +49,17 @@ irm()
   #Finally, move the specified files to the trash.
   for i in $*; do
     if [ -e "$i" ]; then #Make sure each file exists before moving.
-      if [ -e ~/$TRASH/$i ]; then #Make sure we're not overwriting a trashed file.
+      if [ -e "$TRASH/$i" ]; then #Make sure we're not overwriting a trashed file.
         echo "A file named $i already exists in the trashcan. Overwrite? Y/N"
-                                read INPUT
+        read INPUT
         if [[ $INPUT = "N" || $INPUT = "n" ]]; then
           echo "Ok, $i was not deleted. Continuing..."
           continue
         elif [[ $INPUT = "Y" || $INPUT = "y" ]]; then
-          rm -rf ~/$TRASH/$i
+          rm -rf "$TRASH/$i"
         fi
       fi
-      mv "$i" ~/$TRASH/
+      mv "$i" "$TRASH/"
     else
       echo "File $i does not exist."
     fi
