@@ -37,7 +37,7 @@ irm()
     read VERIFY
 
     if [[ $VERIFY = "Y" || $VERIFY = "y" ]]; then
-      rm -rf "$TRASH/*"
+      rm -rf "$TRASH"/*
       echo "Trash emptied."
     else
       echo "Ok, nothing has been deleted."
