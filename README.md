@@ -20,12 +20,15 @@ You can simply append it to your `.bashrc` file:
 
     cat irm.sh >> ~/.bashrc
 
-Or you can import it by appending it to a `~/.bash_functions` file:
+Or you can add it to another file:
 
     cat irm.sh >> ~/.bash_functions
 
-And then importing it into your `.bashrc` file:
+And then import it into your `.bashrc` file by appending:
 
     if [ -f ~/.bash_functions ]; then
         . ~/.bash_functions
     fi
+
+You can configure which directory is the trashcan by setting the `$TRASH` variable
+in the script.
