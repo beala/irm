@@ -47,6 +47,9 @@ irm()
   fi
 
   #Finally, move the specified files to the trash.
+  SAVEIFS=$IFS
+  IFS=$(echo -en "\n\b")
+
   for i in $*; do
     if [ -e "$i" ]; then #Make sure each file exists before moving.
       if [ -e "$TRASH/$i" ]; then #Make sure we're not overwriting a trashed file.
@@ -64,4 +67,6 @@ irm()
       echo "File $i does not exist."
     fi
   done
+
+  IFS=$SAVEIFS
 }
