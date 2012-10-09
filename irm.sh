@@ -55,11 +55,11 @@ irm()
       if [ -e "$TRASH/$i" ]; then #Make sure we're not overwriting a trashed file.
         echo "A file named $i already exists in the trashcan. Overwrite? Y/N"
         read INPUT
-        if [[ $INPUT = "N" || $INPUT = "n" ]]; then
+        if [[ $INPUT = "Y" || $INPUT = "y" ]]; then
+          rm -rf "$TRASH/$i"
+        else
           echo "Ok, $i was not deleted. Continuing..."
           continue
-        elif [[ $INPUT = "Y" || $INPUT = "y" ]]; then
-          rm -rf "$TRASH/$i"
         fi
       fi
       mv "$i" "$TRASH/"
